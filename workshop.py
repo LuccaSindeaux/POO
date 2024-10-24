@@ -63,14 +63,49 @@ def list_Usuarios():
 
 
 # Função principal para interagir com o usuário
+# BUSCAR POR ID
+def update_Usuario_id(id):
+    usuario = session.query(Usuario).filter_by(id=id).first()
+    if usuario:
+        new_name = input('Nome:')
+        new_senha = input('Senha:')
+        new_e_mail = input('E-mail:')
+        new_age = int(input("Nova idade: "))
+        usuario.name = new_name
+        usuario.age = new_age
+        usuario.senha=new_senha
+        usuario.e_mail=new_e_mail
+        session.commit()
+        print(f'Usuário {id}  {new_name} atualizado para a idade {new_age}.')
+    else:
+        print(f'Usuário {id}   não encontrado.')
+# DELETAR USUÁRIO
+def delete_Usuario_id(id):
+    usuario = session.query(Usuario).filter_by(id=id).first()
+    user_name= usuario.name
+    if usuario:
+        session.delete(usuario)
+        session.commit()
+        print(f'Usuário {id} {user_name} deletado com sucesso.')
+    else:
+        print(f'Usuário {id} não encontrado.')
+
+#MENU
+menu='''
+===================================
+        Escolha uma opção:
+    1- Adicionar usuário.
+    2- Atualizar usuário.
+    3- Deletar usuário.
+    4- Listar usuário 
+    5- Buscar usuário por ID.
+    6- Deletar usuário por ID.
+    7-S air
+'''
+# Função principal para interagir com o usuário
 def main():
     while True:
-        print("\nEscolha uma opção:")
-        print("1. Adicionar usuário")
-        print("2. Atualizar usuário")
-        print("3. Deletar usuário")
-        print("4. Listar usuários")
-        print("5. Sair")
+        print(menu)
 
         choice = input("Opção: ")
 
@@ -91,7 +126,13 @@ def main():
         elif choice == '4':
             list_Usuarios()
             input('[Enter] Continua!')
-        elif choice == '5':
+        elif choice =="5":
+            id= int(input('ID do usuario para atualizar: '))
+            update_Usuario_id(id)
+        elif choice == '6':
+            id= int(input('ID do usuario para deletar: '))
+            delete_Usuario_id(id)
+        elif choice == '7':
             print("Saindo...")
             break
         else:
