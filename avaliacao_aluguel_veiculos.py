@@ -57,8 +57,8 @@ class Veiculo(Base):
     valor_diaria = Column(Numeric(10,2), nullable=False)
 
 # ADICIONANDO VEÍCULO
-def add_veiculo(ID_veiculo, marca, modelo, ano, placa, valor_diaria):
-    novo_Veiculo=Veiculo(ID_veiculo=ID_veiculo, marca=marca, modelo=modelo, placa=placa, ano=ano, valor_diaria=valor_diaria)
+def add_veiculo(marca, modelo, ano, placa, valor_diaria):
+    novo_Veiculo=Veiculo(marca=marca, modelo=modelo, placa=placa, ano=ano, valor_diaria=valor_diaria)
     session.add(novo_Veiculo)
     session.commit()
     print(f'Veículo foi adicionado com sucesso!')
